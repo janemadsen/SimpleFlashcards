@@ -25,66 +25,68 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Spacer()
-            
-            Text(definitionDisplayed ? vocab.definition : vocab.word)
-                .font(.title)
-                .padding()
-                .onTapGesture {
-                    definitionDisplayed.toggle()
-                }
-                .background {
-                    RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
-                        .fill(.cyan)
-                }
-            
-            if definitionDisplayed {
-                ScrollView {
-                    VStack {
-                        if !vocab.synonyms.isEmpty {
-                            // Synonyms Section
-                            Text("Synonyms")
-                                .font(.headline)
-                                .padding(.top)
-                            
-                            ForEach(vocab.synonyms, id: \.self) { synonym in
-                                Text(synonym)
-                                    .padding()
-                                    .onTapGesture {
-                                        definitionDisplayed.toggle()
-                                    }
-                                    .background {
-                                        RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
-                                            .fill(.gray)
-                                    }
-                            }
-                        }
-                        
-                        if !vocab.notes.isEmpty {
-                            // Notes Section
-                            Text("Notes")
-                                .font(.headline)
-                                .padding(.top)
-                            
-                            ForEach(vocab.notes, id: \.self) { note in
-                                Text(note)
-                                    .padding()
-                                    .onTapGesture {
-                                        definitionDisplayed.toggle()
-                                    }
-                                    .background {
-                                        RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
-                                            .fill(.gray)
-                                    }
-                            }
-                        }
+            VStack {
+                Spacer()
+                
+                Text(definitionDisplayed ? vocab.definition : vocab.word)
+                    .font(.title)
+                    .padding()
+                    .background {
+                        RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
+                            .fill(.cyan)
                     }
-                    .padding(.horizontal)
+                
+                if definitionDisplayed {
+                    ScrollView {
+                        VStack {
+                            if !vocab.synonyms.isEmpty {
+                                // Synonyms Section
+                                Text("Synonyms")
+                                    .font(.headline)
+                                    .padding(.top)
+                                
+                                ForEach(vocab.synonyms, id: \.self) { synonym in
+                                    Text(synonym)
+                                        .padding()
+                                        .onTapGesture {
+                                            definitionDisplayed.toggle()
+                                        }
+                                        .background {
+                                            RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
+                                                .fill(.gray)
+                                        }
+                                }
+                            }
+                            
+                            if !vocab.notes.isEmpty {
+                                // Notes Section
+                                Text("Notes")
+                                    .font(.headline)
+                                    .padding(.top)
+                                
+                                ForEach(vocab.notes, id: \.self) { note in
+                                    Text(note)
+                                        .padding()
+                                        .onTapGesture {
+                                            definitionDisplayed.toggle()
+                                        }
+                                        .background {
+                                            RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
+                                                .fill(.gray)
+                                        }
+                                }
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
                 }
+                
+                Spacer()
             }
-            
-            Spacer()
-            
+            .onTapGesture {
+                definitionDisplayed.toggle()
+            }
+
             HStack {
                 Spacer()
                 
@@ -99,6 +101,7 @@ struct ContentView: View {
                 
                 Button("Shuffle") {
                     definitionDisplayed = false
+                    displayedWordIndex = 0
                     vocabulary.shuffle()
                 }
                 
