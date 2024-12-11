@@ -17,10 +17,7 @@ struct Vocab {
 struct ContentView: View {
     @State var displayedWordIndex = 0
     
-    @State var vocabulary: [Vocab] = [
-        Vocab(word: "Compiler", definition: "The part of Xcode that converts your code into a language readable by machines", synonyms: ["Interpeter - Related but not the same"], notes: ["Xcode is not a compiler but it does have one."]),
-        Vocab(word: "IDE", definition: "Programs such as VScode, Eclipse, and Xcode that help you develop your code", synonyms: [], notes: [])
-    ]
+    @State var vocabulary: [Vocab] = vocabularyList
     
     var vocab: Vocab {
         vocabulary[displayedWordIndex]
@@ -79,6 +76,7 @@ struct ContentView: View {
                 Spacer()
                 
                 Button("Previous") {
+                    definitionDisplayed = false
                     if displayedWordIndex > 0 {
                         displayedWordIndex -= 1
                     }
@@ -87,6 +85,7 @@ struct ContentView: View {
                 Spacer()
                 
                 Button("Shuffle") {
+                    definitionDisplayed = false
                     vocabulary.shuffle()
                 }
                 
@@ -94,6 +93,7 @@ struct ContentView: View {
                 
                 Button("Next") {
                     if displayedWordIndex < vocabulary.count - 1 {
+                        definitionDisplayed = false
                         displayedWordIndex += 1
                     }
                 }
