@@ -16,15 +16,13 @@ struct Vocab {
 
 struct ContentView: View {
     @State var displayedWordIndex = 0
-    
     @State var vocabulary: [Vocab] = vocabularyList
+    @State var definitionDisplayed = false
     
     var vocab: Vocab {
         vocabulary[displayedWordIndex]
     }
-    
-    @State var definitionDisplayed = false
-    
+
     var body: some View {
         VStack {
             Spacer()
@@ -41,32 +39,47 @@ struct ContentView: View {
                 }
             
             if definitionDisplayed {
-                HStack {
+                ScrollView {
                     VStack {
-                        ForEach(vocab.synonyms, id: \.self) { synonym in
-                            Text(synonym)
-                                .padding()
-                                .onTapGesture {
-                                    definitionDisplayed.toggle()
-                                }
-                                .background {
-                                    RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
-                                        .fill(.gray)
-                                }
+                        if !vocab.synonyms.isEmpty {
+                            // Synonyms Section
+                            Text("Synonyms")
+                                .font(.headline)
+                                .padding(.top)
+                            
+                            ForEach(vocab.synonyms, id: \.self) { synonym in
+                                Text(synonym)
+                                    .padding()
+                                    .onTapGesture {
+                                        definitionDisplayed.toggle()
+                                    }
+                                    .background {
+                                        RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
+                                            .fill(.gray)
+                                    }
+                            }
                         }
                         
-                        ForEach(vocab.notes, id: \.self) { note in
-                            Text(note)
-                                .padding()
-                                .onTapGesture {
-                                    definitionDisplayed.toggle()
-                                }
-                                .background {
-                                    RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
-                                        .fill(.gray)
-                                }
+                        if !vocab.notes.isEmpty {
+                            // Notes Section
+                            Text("Notes")
+                                .font(.headline)
+                                .padding(.top)
+                            
+                            ForEach(vocab.notes, id: \.self) { note in
+                                Text(note)
+                                    .padding()
+                                    .onTapGesture {
+                                        definitionDisplayed.toggle()
+                                    }
+                                    .background {
+                                        RoundedRectangle(cornerSize: CGSize(width: 10, height: 10))
+                                            .fill(.gray)
+                                    }
+                            }
                         }
                     }
+                    .padding(.horizontal)
                 }
             }
             
@@ -104,6 +117,7 @@ struct ContentView: View {
         .padding()
     }
 }
+
 
 #Preview {
     ContentView()
