@@ -7,16 +7,9 @@
 
 import SwiftUI
 
-struct Vocab {
-    var word: String
-    var definition: String
-    var synonyms: [String]
-    var notes: [String]
-}
-
 struct ContentView: View {
     @State var displayedWordIndex = 0
-    @State var vocabulary: [Vocab] = vocabularyList
+    @State var vocabulary: [Vocab] = Vocab.list
     @State var definitionDisplayed = false
     
     var vocab: Vocab {
@@ -39,6 +32,13 @@ struct ContentView: View {
                 if definitionDisplayed {
                     ScrollView {
                         VStack {
+                            if !vocab.referenceImage.isEmpty {
+                                Image(vocab.referenceImage)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .shadow(radius: 7)
+                                    .padding()
+                            }
                             if !vocab.synonyms.isEmpty {
                                 // Synonyms Section
                                 Text("Synonyms")
