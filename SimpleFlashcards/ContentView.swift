@@ -36,6 +36,7 @@ struct ContentView: View {
                                 Image(vocab.referenceImage)
                                     .resizable()
                                     .scaledToFit()
+                                    .clipShape(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)))
                                     .shadow(radius: 7)
                                     .padding()
                             }
