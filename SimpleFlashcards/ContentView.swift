@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var displayedWordIndex = 0
+    @State var displayedWordIndex = 1
     @State var vocabulary: [Vocab] = Vocab.list
     @State var definitionDisplayed = false
     
